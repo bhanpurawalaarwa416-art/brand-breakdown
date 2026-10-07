@@ -1,0 +1,6 @@
+{
+  "name": "Brand Breakdown",
+  "description": "A modern digital marketing and business blog exploring the strategies, storytelling, and secrets behind iconic brands.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
