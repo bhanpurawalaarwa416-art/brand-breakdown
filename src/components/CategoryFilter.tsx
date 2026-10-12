@@ -4,7 +4,7 @@ import { Category } from '../types';
 interface CategoryFilterProps {
   categories: Category[];
   activeCategory: Category;
-  onSelectCategory: (category: Category) => void;
+  onSelectCategory: (category: Category, urlPath: string) => void;
   counts: Record<Category, number>;
 }
 
@@ -14,6 +14,11 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
   onSelectCategory,
   counts,
 }) => {
+  const getCategoryUrl = (cat: Category) => {
+    if (cat === 'All') return '/';
+    return `/category/${cat.toLowerCase().replace(/\s+/g, '-')}`;
+  };
+
   return (
     <div className="w-full">
       <div className="flex items-center justify-between pb-3 mb-2 border-b border-gray-200">
@@ -30,19 +35,26 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
         </span>
       </div>
 
-      {/* Horizontal scrollable interactive filter controls */}
+      {/* Horizontal scrollable interactive filter controls with clean URLs and Anchor Text */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none py-1">
         {categories.map((category) => {
           const isActive = activeCategory === category;
+          const urlPath = getCategoryUrl(category);
+
           return (
-            <button
+            <a
               key={category}
-              onClick={() => onSelectCategory(category)}
+              href={urlPath}
+              onClick={(e) => {
+                e.preventDefault();
+                onSelectCategory(category, urlPath);
+              }}
               className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                 isActive
                   ? 'bg-gray-950 text-white shadow-xs'
                   : 'bg-white hover:bg-gray-100 text-gray-700 border border-gray-200/80 hover:text-gray-950'
               }`}
+              title={`View ${category} category breakdowns (${counts[category] || 0} articles)`}
             >
               <span>{category}</span>
               <span
@@ -52,7 +64,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
               >
                 {counts[category] || 0}
               </span>
-            </button>
+            </a>
           );
         })}
       </div>

@@ -23,12 +23,16 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
       className="group bg-white rounded-2xl border border-gray-200/90 overflow-hidden shadow-xs hover:shadow-md hover:border-gray-300 transition-all duration-200 flex flex-col justify-between cursor-pointer"
     >
       <div>
-        {/* Card Media Container */}
-        <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+        {/* Card Media Container: Optimized compact aspect ratio */}
+        <div className="relative aspect-[16/10] overflow-hidden bg-gray-100 max-h-56">
           {!imgError ? (
             <img
               src={article.image}
-              alt={article.title}
+              alt={article.imageAlt || `${article.title} breakdown`}
+              loading="lazy"
+              decoding="async"
+              width="640"
+              height="400"
               onError={() => setImgError(true)}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -46,16 +50,19 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
             </div>
           )}
 
-          {/* Bookmark Button */}
+          {/* Bookmark Button with accessible text label */}
           {onToggleSave && (
             <button
               onClick={(e) => onToggleSave(article.id, e)}
-              aria-label={isSaved ? 'Remove from saved' : 'Save for later'}
+              aria-label={isSaved ? `Remove ${article.title} from saved list` : `Save ${article.title} to reading list`}
               className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-md rounded-full shadow-xs hover:bg-white text-gray-700 hover:text-red-600 transition-colors cursor-pointer"
             >
               <Bookmark
                 className={`w-4 h-4 ${isSaved ? 'fill-red-600 text-red-600' : ''}`}
               />
+              <span className="sr-only">
+                {isSaved ? 'Remove from saved' : 'Save article'}
+              </span>
             </button>
           )}
         </div>
@@ -71,9 +78,18 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
             <span className="text-gray-500">{article.publishedDate}</span>
           </div>
 
-          {/* Title */}
+          {/* Title as Anchor Heading */}
           <h3 className="font-editorial text-xl font-bold text-gray-950 group-hover:text-red-600 transition-colors leading-snug line-clamp-2">
-            {article.title}
+            <a
+              href={`/articles/${article.slug}`}
+              onClick={(e) => {
+                e.preventDefault();
+                onSelect(article.slug);
+              }}
+              className="focus:outline-none"
+            >
+              {article.title}
+            </a>
           </h3>
 
           {/* Short Description */}
@@ -83,16 +99,26 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
         </div>
       </div>
 
-      {/* Card Footer */}
+      {/* Card Footer with explicit Anchor Text */}
       <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-2 border-t border-gray-100 flex items-center justify-between text-xs font-semibold text-gray-500">
         <span className="flex items-center gap-1.5">
           <Clock className="w-3.5 h-3.5" />
           {article.readingTime}
         </span>
 
-        <span className="text-gray-900 group-hover:text-red-600 group-hover:translate-x-0.5 transition-all flex items-center gap-1 font-bold">
-          Read more <ArrowRight className="w-3.5 h-3.5" />
-        </span>
+        {/* Explicit descriptive anchor text */}
+        <a
+          href={`/articles/${article.slug}`}
+          onClick={(e) => {
+            e.preventDefault();
+            onSelect(article.slug);
+          }}
+          className="text-gray-900 group-hover:text-red-600 transition-colors flex items-center gap-1.5 font-bold hover:underline"
+          title={`Read full breakdown: ${article.title}`}
+        >
+          <span>Read breakdown</span>
+          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+        </a>
       </div>
     </article>
   );

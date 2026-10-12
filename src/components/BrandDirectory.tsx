@@ -135,8 +135,9 @@ export const BrandDirectory: React.FC<BrandDirectoryProps> = ({
                   }
                 }}
                 className="px-4 py-2 bg-gray-900 group-hover:bg-red-600 text-white text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer"
+                title={`View ${brand.name} marketing strategy breakdown`}
               >
-                <span>View Breakdown</span>
+                <span>View {brand.name} Breakdown</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>

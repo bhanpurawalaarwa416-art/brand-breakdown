@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Sparkles, TrendingUp, Compass, Award } from 'lucide-react';
+import { ArrowRight, Compass } from 'lucide-react';
 
 interface HeroSectionProps {
   onExploreArticles: () => void;
@@ -36,26 +36,36 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               Discover how the world&apos;s most recognisable brands use marketing, storytelling, technology and strategy to win customers.
             </p>
 
-            {/* CTAs */}
+            {/* CTAs with clear anchor text */}
             <div className="pt-2 flex flex-wrap items-center gap-4">
-              <button
-                onClick={onExploreArticles}
+              <a
+                href="#latest-breakdowns"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onExploreArticles();
+                }}
                 className="px-6 py-3.5 bg-red-600 hover:bg-red-700 text-white font-semibold text-sm rounded-xl transition-all shadow-sm hover:shadow-md flex items-center gap-2 cursor-pointer group"
+                title="Explore all marketing articles"
               >
-                <span>Explore Articles</span>
+                <span>Explore Marketing Articles</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
+              </a>
 
-              <button
-                onClick={onExploreBrands}
+              <a
+                href="/brands"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onExploreBrands();
+                }}
                 className="px-6 py-3.5 bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 font-semibold text-sm rounded-xl transition-all shadow-xs hover:border-gray-400 flex items-center gap-2 cursor-pointer"
+                title="Explore popular brand directory"
               >
                 <Compass className="w-4 h-4 text-gray-600" />
-                <span>Explore Brands</span>
-              </button>
+                <span>Explore Popular Brands</span>
+              </a>
             </div>
 
-            {/* Quick Proof Metrics adjacent to claims */}
+            {/* Quick Proof Metrics */}
             <div className="pt-6 border-t border-gray-200/80 grid grid-cols-3 gap-4 max-w-lg">
               <div>
                 <p className="text-2xl font-black text-gray-950 tabular-nums">12</p>
@@ -72,7 +82,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
           </div>
 
-          {/* Right Column: Visual Collage Grid of Featured Brands */}
+          {/* Right Column: Visual Collage Grid of Featured Brands with small images and alt text */}
           <div className="lg:col-span-5 relative">
             <div className="grid grid-cols-2 gap-3.5 sm:gap-4 p-2 bg-gray-100/70 rounded-2xl border border-gray-200/80 shadow-xs">
               {/* Card 1: Zomato */}
@@ -80,10 +90,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 onClick={() => onSelectArticle('zomato-brand-experience')}
                 className="group relative bg-white rounded-xl overflow-hidden shadow-xs hover:shadow-md border border-gray-200/90 transition-all cursor-pointer flex flex-col justify-between"
               >
-                <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                <div className="aspect-[4/3] max-h-36 overflow-hidden bg-gray-100">
                   <img
                     src="/src/assets/images/zomato_brand_breakdown_1791359598593.jpg"
-                    alt="Zomato food delivery lifestyle"
+                    alt="Zomato food delivery lifestyle packaging and mobile application on café counter"
+                    loading="lazy"
+                    decoding="async"
+                    width="320"
+                    height="240"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
@@ -101,10 +115,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 onClick={() => onSelectArticle('nike-brand-strategy')}
                 className="group relative bg-white rounded-xl overflow-hidden shadow-xs hover:shadow-md border border-gray-200/90 transition-all cursor-pointer flex flex-col justify-between"
               >
-                <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                <div className="aspect-[4/3] max-h-36 overflow-hidden bg-gray-100">
                   <img
                     src="/src/assets/images/nike_brand_breakdown_1791359612565.jpg"
-                    alt="Nike runner athletic grit"
+                    alt="Nike runner tying shoes on urban track at sunrise showcasing Just Do It mindset"
+                    loading="lazy"
+                    decoding="async"
+                    width="320"
+                    height="240"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
@@ -122,10 +140,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 onClick={() => onSelectArticle('starbucks-lifestyle-marketing')}
                 className="group relative bg-white rounded-xl overflow-hidden shadow-xs hover:shadow-md border border-gray-200/90 transition-all cursor-pointer flex flex-col justify-between"
               >
-                <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                <div className="aspect-[4/3] max-h-36 overflow-hidden bg-gray-100">
                   <img
                     src="/src/assets/images/starbucks_lifestyle_breakdown_1791359623414.jpg"
-                    alt="Starbucks coffee lifestyle ritual"
+                    alt="Starbucks Third Place coffee and notebook lifestyle setup in sunlit cafe"
+                    loading="lazy"
+                    decoding="async"
+                    width="320"
+                    height="240"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
@@ -143,10 +165,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 onClick={() => onSelectArticle('apple-simplicity-superpower')}
                 className="group relative bg-white rounded-xl overflow-hidden shadow-xs hover:shadow-md border border-gray-200/90 transition-all cursor-pointer flex flex-col justify-between"
               >
-                <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                <div className="aspect-[4/3] max-h-36 overflow-hidden bg-gray-100">
                   <img
                     src="/src/assets/images/apple_minimalism_breakdown_1791359633427.jpg"
-                    alt="Apple architectural minimalism"
+                    alt="Apple minimalist hardware design resting on architectural stone block"
+                    loading="lazy"
+                    decoding="async"
+                    width="320"
+                    height="240"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
@@ -160,7 +186,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
             </div>
 
-            {/* Editor's Note Stamp */}
+            {/* Editor's Note */}
             <div className="mt-3 text-center">
               <span className="text-xs text-gray-500 font-medium italic">
                 Curated by First-Year BBA Digital Business · Spring Edition 2026

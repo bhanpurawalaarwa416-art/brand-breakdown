@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Clock, Star } from 'lucide-react';
+import { ArrowRight, Clock } from 'lucide-react';
 import { Article } from '../types';
 
 interface FeaturedBreakdownProps {
@@ -31,11 +31,15 @@ export const FeaturedBreakdown: React.FC<FeaturedBreakdownProps> = ({
           onClick={() => onReadArticle(article.slug)}
           className="group relative bg-[#FAFAFA] rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 cursor-pointer grid grid-cols-1 lg:grid-cols-12"
         >
-          {/* Large Image Column */}
-          <div className="lg:col-span-7 relative overflow-hidden bg-gray-100 aspect-[16/10] lg:aspect-auto min-h-[300px] lg:min-h-[420px]">
+          {/* Large Image Column: Optimized sizing & alt text */}
+          <div className="lg:col-span-7 relative overflow-hidden bg-gray-100 aspect-[16/10] lg:aspect-auto min-h-[300px] lg:min-h-[400px]">
             <img
               src={article.image}
-              alt={article.title}
+              alt={article.imageAlt || `${article.title} featured analysis`}
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="500"
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
@@ -60,9 +64,18 @@ export const FeaturedBreakdown: React.FC<FeaturedBreakdownProps> = ({
                 </span>
               </div>
 
-              {/* Title */}
+              {/* Title with Anchor Tag */}
               <h3 className="font-editorial text-2xl sm:text-3xl lg:text-4xl font-black text-gray-950 group-hover:text-red-600 transition-colors leading-[1.15]">
-                {article.title}
+                <a
+                  href={`/articles/${article.slug}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onReadArticle(article.slug);
+                  }}
+                  className="focus:outline-none"
+                >
+                  {article.title}
+                </a>
               </h3>
 
               {/* Subtitle / Short Description */}
@@ -80,18 +93,20 @@ export const FeaturedBreakdown: React.FC<FeaturedBreakdownProps> = ({
               </div>
             </div>
 
-            {/* Read Article Button */}
+            {/* Read Article Button with Descriptive Anchor Text */}
             <div className="pt-8">
-              <button
+              <a
+                href={`/articles/${article.slug}`}
                 onClick={(e) => {
-                  e.stopPropagation();
+                  e.preventDefault();
                   onReadArticle(article.slug);
                 }}
                 className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-gray-950 group-hover:bg-red-600 text-white font-semibold text-sm rounded-xl transition-colors cursor-pointer"
+                title={`Read full article: ${article.title}`}
               >
-                <span>Read Full Breakdown</span>
+                <span>Read Full Zomato Breakdown</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
+              </a>
             </div>
           </div>
         </div>

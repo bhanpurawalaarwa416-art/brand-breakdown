@@ -1,7 +1,17 @@
 export type Category = 'All' | 'Brand Stories' | 'Marketing' | 'Digital' | 'Business' | 'Gen Z';
 
+export interface SeoMetadata {
+  mainKeyword: string;
+  relatedKeywords: [string, string];
+  metaTitle: string;
+  metaDescription: string;
+  canonicalPath: string;
+}
+
 export interface ArticleSection {
   heading?: string;
+  isAeoQuestion?: boolean;
+  directAnswer?: string;
   paragraphs: string[];
   pullQuote?: string;
   callout?: {
@@ -28,9 +38,11 @@ export interface Article {
   publishedDate: string;
   readingTime: string;
   image: string;
+  imageAlt: string;
   fallbackGradient: string;
   brandName?: string;
   summary: string;
+  seo: SeoMetadata;
   sections: ArticleSection[];
   keyTakeaways: string[];
   marketingLessons: string[];
@@ -51,3 +63,4 @@ export interface BrandInfo {
   foundedYear: string;
   origin: string;
 }
+

@@ -3,11 +3,16 @@ import { ArrowUp, Instagram, Linkedin, Twitter, Code2, GraduationCap } from 'luc
 import { Category } from '../types';
 
 interface FooterProps {
-  onSelectTab: (tab: string, categoryFilter?: Category) => void;
+  onNavigate: (path: string, categoryFilter?: Category) => void;
   onOpenVercelGuide: () => void;
+  onOpenSeoInspector: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSelectTab, onOpenVercelGuide }) => {
+export const Footer: React.FC<FooterProps> = ({
+  onNavigate,
+  onOpenVercelGuide,
+  onOpenSeoInspector,
+}) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -33,83 +38,114 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTab, onOpenVercelGuide }
               A student-led digital publication exploring branding, marketing frameworks, consumer behavior, and business models for modern learners and marketing enthusiasts.
             </p>
 
-            {/* Social Icons */}
+            {/* Social Icons with descriptive anchor titles */}
             <div className="flex items-center gap-3 pt-2">
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Instagram"
+                aria-label="Visit Brand Breakdown Instagram"
+                title="Follow Brand Breakdown on Instagram"
                 className="w-9 h-9 rounded-lg bg-gray-100 hover:bg-red-50 hover:text-red-600 text-gray-700 flex items-center justify-center transition-colors"
               >
                 <Instagram className="w-4 h-4" />
+                <span className="sr-only">Instagram</span>
               </a>
               <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="LinkedIn"
+                aria-label="Visit Brand Breakdown LinkedIn"
+                title="Follow Brand Breakdown on LinkedIn"
                 className="w-9 h-9 rounded-lg bg-gray-100 hover:bg-red-50 hover:text-red-600 text-gray-700 flex items-center justify-center transition-colors"
               >
                 <Linkedin className="w-4 h-4" />
+                <span className="sr-only">LinkedIn</span>
               </a>
               <a
                 href="https://x.com"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="X (formerly Twitter)"
+                aria-label="Visit Brand Breakdown on X Twitter"
+                title="Follow Brand Breakdown on X"
                 className="w-9 h-9 rounded-lg bg-gray-100 hover:bg-red-50 hover:text-red-600 text-gray-700 flex items-center justify-center transition-colors"
               >
                 <Twitter className="w-4 h-4" />
+                <span className="sr-only">X Twitter</span>
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links with explicit Anchor Text & Clean URLs */}
           <div className="md:col-span-3 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-gray-900">
-              Navigation
+              Site Navigation
             </h4>
             <ul className="space-y-2 text-sm font-medium text-gray-600">
               <li>
-                <button
-                  onClick={() => onSelectTab('home')}
-                  className="hover:text-red-600 transition-colors cursor-pointer"
+                <a
+                  href="/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('/');
+                  }}
+                  className="hover:text-red-600 transition-colors cursor-pointer block"
+                  title="Return to Homepage"
                 >
-                  Home
-                </button>
+                  Home Page
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTab('brands')}
-                  className="hover:text-red-600 transition-colors cursor-pointer"
+                <a
+                  href="/brands"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('/brands');
+                  }}
+                  className="hover:text-red-600 transition-colors cursor-pointer block"
+                  title="Browse Brand Directory"
                 >
-                  Brands
-                </button>
+                  Brands Directory
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTab('home', 'Marketing')}
-                  className="hover:text-red-600 transition-colors cursor-pointer"
+                <a
+                  href="/category/marketing"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('/category/marketing', 'Marketing');
+                  }}
+                  className="hover:text-red-600 transition-colors cursor-pointer block"
+                  title="Explore Marketing Articles"
                 >
-                  Marketing
-                </button>
+                  Marketing Articles
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTab('home', 'Business')}
-                  className="hover:text-red-600 transition-colors cursor-pointer"
+                <a
+                  href="/category/business"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('/category/business', 'Business');
+                  }}
+                  className="hover:text-red-600 transition-colors cursor-pointer block"
+                  title="Explore Business Model Articles"
                 >
-                  Business
-                </button>
+                  Business Models
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onSelectTab('about')}
-                  className="hover:text-red-600 transition-colors cursor-pointer"
+                <a
+                  href="/about"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('/about');
+                  }}
+                  className="hover:text-red-600 transition-colors cursor-pointer block"
+                  title="Read About the Project"
                 >
-                  About
-                </button>
+                  About the Project
+                </a>
               </li>
             </ul>
           </div>
@@ -123,13 +159,19 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTab, onOpenVercelGuide }
             <p className="text-xs text-gray-600 leading-relaxed">
               Developed as a First-Year BBA Digital Business semester project evaluating digital branding, content marketing, and modern frontend application development.
             </p>
-            <div className="pt-2">
+            <div className="pt-2 flex flex-wrap gap-2">
               <button
                 onClick={onOpenVercelGuide}
                 className="inline-flex items-center gap-2 px-3.5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg text-xs font-bold transition-colors cursor-pointer"
               >
                 <Code2 className="w-3.5 h-3.5 text-red-600" />
                 <span>Vercel Deploy &amp; Run Guide</span>
+              </button>
+              <button
+                onClick={onOpenSeoInspector}
+                className="inline-flex items-center gap-2 px-3.5 py-2 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 rounded-lg text-xs font-bold transition-colors cursor-pointer"
+              >
+                <span>SEO Keywords Directory</span>
               </button>
             </div>
           </div>

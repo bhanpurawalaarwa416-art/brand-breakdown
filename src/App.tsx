@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { ARTICLES } from './data/articles';
 import { BRANDS } from './data/brands';
-import { Category, Article, BrandInfo } from './types';
+import { PAGE_SEO } from './data/pageSeo';
+import { updatePageSeo } from './utils/seo';
+import { Category, Article } from './types';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { FeaturedBreakdown } from './components/FeaturedBreakdown';
@@ -15,7 +17,8 @@ import { Newsletter } from './components/Newsletter';
 import { Footer } from './components/Footer';
 import { VercelGuideModal } from './components/VercelGuideModal';
 import { SavedArticlesModal } from './components/SavedArticlesModal';
-import { ArrowRight, Compass, Sparkles, BookOpen, Layers } from 'lucide-react';
+import { SeoInspectorModal } from './components/SeoInspectorModal';
+import { ArrowRight, BookOpen, KeyRound } from 'lucide-react';
 
 const CATEGORIES: Category[] = [
   'All',
@@ -27,12 +30,13 @@ const CATEGORIES: Category[] = [
 ];
 
 export default function App() {
-  const [currentTab, setCurrentTab] = useState<'home' | 'brands' | 'about'>('home');
+  const [currentTab, setCurrentTab] = useState<'home' | 'brands' | 'about' | string>('home');
   const [selectedCategory, setSelectedCategory] = useState<Category>('All');
   const [activeArticleSlug, setActiveArticleSlug] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isVercelGuideOpen, setIsVercelGuideOpen] = useState(false);
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
+  const [isSeoInspectorOpen, setIsSeoInspectorOpen] = useState(false);
 
   // Saved articles in local storage
   const [savedArticleIds, setSavedArticleIds] = useState<string[]>(() => {
@@ -53,72 +57,107 @@ export default function App() {
     }
   }, [savedArticleIds]);
 
-  // URL sync & history support
+  // Routing and SEO sync
+  const syncRouteAndSeo = () => {
+    const path = window.location.pathname;
+    const hash = window.location.hash;
+
+    // 1. Article Route: /articles/:slug
+    if (path.startsWith('/articles/')) {
+      const slug = path.replace('/articles/', '').replace(/\/$/, '');
+      if (slug) {
+        const found = ARTICLES.find((a) => a.slug === slug);
+        if (found) {
+          setActiveArticleSlug(slug);
+          setCurrentTab('article');
+          updatePageSeo(found.seo);
+          return;
+        }
+      }
+    }
+
+    if (hash.startsWith('#article=')) {
+      const slug = hash.replace('#article=', '');
+      if (slug) {
+        const found = ARTICLES.find((a) => a.slug === slug);
+        if (found) {
+          setActiveArticleSlug(slug);
+          setCurrentTab('article');
+          updatePageSeo(found.seo);
+          return;
+        }
+      }
+    }
+
+    // 2. Brands Directory Route: /brands
+    if (path === '/brands' || hash === '#brands') {
+      setCurrentTab('brands');
+      setActiveArticleSlug(null);
+      updatePageSeo(PAGE_SEO.brands);
+      return;
+    }
+
+    // 3. About Page Route: /about
+    if (path === '/about' || hash === '#about') {
+      setCurrentTab('about');
+      setActiveArticleSlug(null);
+      updatePageSeo(PAGE_SEO.about);
+      return;
+    }
+
+    // 4. Category Route: /category/:category
+    if (path.startsWith('/category/')) {
+      const catSlug = path.replace('/category/', '').replace(/\/$/, '');
+      const categoryMap: Record<string, Category> = {
+        'brand-stories': 'Brand Stories',
+        marketing: 'Marketing',
+        digital: 'Digital',
+        business: 'Business',
+        'gen-z': 'Gen Z',
+      };
+
+      const matchedCategory = categoryMap[catSlug];
+      if (matchedCategory) {
+        setCurrentTab(`category-${catSlug}`);
+        setActiveArticleSlug(null);
+        setSelectedCategory(matchedCategory);
+
+        const seoKey = `category-${catSlug}`;
+        if (PAGE_SEO[seoKey]) {
+          updatePageSeo(PAGE_SEO[seoKey]);
+        }
+        return;
+      }
+    }
+
+    // 5. Default Homepage Route: /
+    setActiveArticleSlug(null);
+    setCurrentTab('home');
+    setSelectedCategory('All');
+    updatePageSeo(PAGE_SEO.home);
+  };
+
   useEffect(() => {
-    const handlePopState = () => {
-      const path = window.location.pathname;
-      const hash = window.location.hash;
-
-      if (path.startsWith('/articles/')) {
-        const slug = path.replace('/articles/', '').replace(/\/$/, '');
-        if (slug) {
-          setActiveArticleSlug(slug);
-          return;
-        }
-      }
-
-      if (hash.startsWith('#article=')) {
-        const slug = hash.replace('#article=', '');
-        if (slug) {
-          setActiveArticleSlug(slug);
-          return;
-        }
-      }
-
-      if (hash === '#brands' || path === '/brands') {
-        setCurrentTab('brands');
-        setActiveArticleSlug(null);
-      } else if (hash === '#about' || path === '/about') {
-        setCurrentTab('about');
-        setActiveArticleSlug(null);
-      } else {
-        setActiveArticleSlug(null);
-        setCurrentTab('home');
-      }
-    };
-
-    handlePopState();
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    syncRouteAndSeo();
+    window.addEventListener('popstate', syncRouteAndSeo);
+    return () => window.removeEventListener('popstate', syncRouteAndSeo);
   }, []);
 
-  const handleSelectArticle = (slug: string) => {
-    setActiveArticleSlug(slug);
-    window.history.pushState(null, '', `/articles/${slug}`);
+  const handleNavigate = (path: string, categoryFilter?: Category) => {
+    window.history.pushState(null, '', path);
+    if (categoryFilter) {
+      setSelectedCategory(categoryFilter);
+    }
+    syncRouteAndSeo();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSelectArticle = (slug: string) => {
+    handleNavigate(`/articles/${slug}`);
   };
 
   const handleBackFromArticle = () => {
-    setActiveArticleSlug(null);
-    window.history.pushState(null, '', '/');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleSelectTab = (tab: string, categoryFilter?: Category) => {
-    setActiveArticleSlug(null);
-    if (tab === 'brands') {
-      setCurrentTab('brands');
-      window.history.pushState(null, '', '#brands');
-    } else if (tab === 'about') {
-      setCurrentTab('about');
-      window.history.pushState(null, '', '#about');
-    } else {
-      setCurrentTab('home');
-      window.history.pushState(null, '', '/');
-      if (categoryFilter) {
-        setSelectedCategory(categoryFilter);
-      }
-    }
+    handleNavigate('/');
   };
 
   const toggleSaveArticle = (id: string, e: React.MouseEvent) => {
@@ -178,10 +217,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAFAFA] text-gray-900 selection:bg-red-600 selection:text-white">
-      {/* 1. Navigation Bar */}
+      {/* 1. Navigation Bar with Clean URLs and Anchor Text */}
       <Navbar
-        currentTab={activeArticleSlug ? 'articles' : currentTab}
-        onSelectTab={handleSelectTab}
+        currentTab={currentTab}
+        onNavigate={handleNavigate}
         onOpenSearch={() => setIsSearchOpen(true)}
         savedCount={savedArticleIds.length}
         onOpenSaved={() => setIsSavedModalOpen(true)}
@@ -190,7 +229,7 @@ export default function App() {
       {/* Main Content Area */}
       <main className="flex-1">
         {activeArticleSlug && currentArticle ? (
-          /* Dedicated Article View */
+          /* Dedicated Article View with AEO Question & Answer blocks */
           <ArticleDetail
             article={currentArticle}
             relatedArticles={relatedArticles}
@@ -200,7 +239,7 @@ export default function App() {
             onToggleSave={toggleSaveArticle}
           />
         ) : currentTab === 'brands' ? (
-          /* Brands Directory Page */
+          /* Brands Directory Page: /brands */
           <BrandDirectory
             onSelectBrandArticles={(brand) => {
               if (brand.associatedArticleSlugs.length > 0) {
@@ -210,13 +249,13 @@ export default function App() {
             onOpenArticle={handleSelectArticle}
           />
         ) : currentTab === 'about' ? (
-          /* About Page */
+          /* About Page: /about */
           <AboutPage
-            onExploreArticles={() => handleSelectTab('home')}
+            onExploreArticles={() => handleNavigate('/')}
             onOpenVercelGuide={() => setIsVercelGuideOpen(true)}
           />
         ) : (
-          /* Homepage: Following the exact 10-step order */
+          /* Homepage / Category Page: / or /category/:slug */
           <div>
             {/* 2. Hero section */}
             <HeroSection
@@ -224,7 +263,7 @@ export default function App() {
                 const el = document.getElementById('latest-breakdowns');
                 el?.scrollIntoView({ behavior: 'smooth' });
               }}
-              onExploreBrands={() => handleSelectTab('brands')}
+              onExploreBrands={() => handleNavigate('/brands')}
               onSelectArticle={handleSelectArticle}
             />
 
@@ -234,12 +273,15 @@ export default function App() {
               onReadArticle={handleSelectArticle}
             />
 
-            {/* 4. Latest Breakdowns & 5. Category filter */}
+            {/* 4. Latest Breakdowns & 5. Category filter with unique URLs */}
             <section id="latest-breakdowns" className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
               <CategoryFilter
                 categories={CATEGORIES}
                 activeCategory={selectedCategory}
-                onSelectCategory={setSelectedCategory}
+                onSelectCategory={(cat, urlPath) => {
+                  setSelectedCategory(cat);
+                  handleNavigate(urlPath, cat);
+                }}
                 counts={categoryCounts}
               />
 
@@ -269,13 +311,18 @@ export default function App() {
                       Popular Brands We Break Down
                     </h2>
                   </div>
-                  <button
-                    onClick={() => handleSelectTab('brands')}
+                  <a
+                    href="/brands"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavigate('/brands');
+                    }}
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-900 hover:text-red-600 transition-colors cursor-pointer group"
+                    title="View all 12 brand case studies"
                   >
                     <span>View All 12 Brands</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                  </button>
+                  </a>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
@@ -286,7 +333,7 @@ export default function App() {
                         if (brand.associatedArticleSlugs.length > 0) {
                           handleSelectArticle(brand.associatedArticleSlugs[0]);
                         } else {
-                          handleSelectTab('brands');
+                          handleNavigate('/brands');
                         }
                       }}
                       className="p-4 rounded-xl bg-gray-50 hover:bg-red-50/50 border border-gray-200/80 hover:border-red-200 transition-all cursor-pointer group flex flex-col justify-between"
@@ -306,7 +353,7 @@ export default function App() {
                         </p>
                       </div>
                       <span className="text-[11px] font-bold text-red-600 pt-3 group-hover:underline flex items-center gap-1">
-                        Breakdown &rarr;
+                        <span>Read {brand.name}</span> &rarr;
                       </span>
                     </div>
                   ))}
@@ -328,13 +375,27 @@ export default function App() {
                   <p className="text-gray-600 leading-relaxed text-sm sm:text-base font-normal max-w-2xl">
                     Brand Breakdown was created as a college project by a first-year BBA Digital Business student to bridge the gap between abstract academic marketing theories and how companies like Zomato, Nike, and Apple actually win customers in the wild.
                   </p>
-                  <div className="pt-2">
-                    <button
-                      onClick={() => handleSelectTab('about')}
+                  <div className="pt-2 flex flex-wrap items-center gap-4">
+                    <a
+                      href="/about"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavigate('/about');
+                      }}
                       className="inline-flex items-center gap-2 text-sm font-bold text-gray-950 hover:text-red-600 transition-colors cursor-pointer group"
+                      title="Read the full Brand Breakdown editorial story"
                     >
                       <span>Read the Full Editorial Story</span>
                       <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </a>
+
+                    <button
+                      onClick={() => setIsSeoInspectorOpen(true)}
+                      className="inline-flex items-center gap-2 text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 px-3 py-1.5 rounded-lg cursor-pointer transition-colors"
+                      title="Open page keywords and URL index"
+                    >
+                      <KeyRound className="w-3.5 h-3.5" />
+                      <span>View SEO Keywords Index</span>
                     </button>
                   </div>
                 </div>
@@ -371,10 +432,11 @@ export default function App() {
         )}
       </main>
 
-      {/* 10. Footer */}
+      {/* 10. Footer with Anchor Links and SEO Keywords launcher */}
       <Footer
-        onSelectTab={handleSelectTab}
+        onNavigate={handleNavigate}
         onOpenVercelGuide={() => setIsVercelGuideOpen(true)}
+        onOpenSeoInspector={() => setIsSeoInspectorOpen(true)}
       />
 
       {/* Search Modal */}
@@ -400,6 +462,13 @@ export default function App() {
       <VercelGuideModal
         isOpen={isVercelGuideOpen}
         onClose={() => setIsVercelGuideOpen(false)}
+      />
+
+      {/* SEO & Keywords Directory Modal */}
+      <SeoInspectorModal
+        isOpen={isSeoInspectorOpen}
+        onClose={() => setIsSeoInspectorOpen(false)}
+        onNavigateToPage={handleNavigate}
       />
     </div>
   );
