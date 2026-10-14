@@ -15,7 +15,24 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
   isSaved = false,
   onToggleSave,
 }) => {
+  const [currentSrc, setCurrentSrc] = useState(article.image);
   const [imgError, setImgError] = useState(false);
+  const [hasRetried, setHasRetried] = useState(false);
+
+  const handleImageError = () => {
+    if (!hasRetried) {
+      setHasRetried(true);
+      if (currentSrc.includes('/src/assets/images/')) {
+        setCurrentSrc(currentSrc.replace('/src/assets/images/', '/images/'));
+      } else if (currentSrc.startsWith('/images/')) {
+        setCurrentSrc(currentSrc.replace('/images/', '/src/assets/images/'));
+      } else {
+        setImgError(true);
+      }
+    } else {
+      setImgError(true);
+    }
+  };
 
   return (
     <article
@@ -27,13 +44,13 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
         <div className="relative aspect-[16/10] overflow-hidden bg-gray-100 max-h-56">
           {!imgError ? (
             <img
-              src={article.image}
+              src={currentSrc}
               alt={article.imageAlt || `${article.title} breakdown`}
               loading="lazy"
               decoding="async"
               width="640"
               height="400"
-              onError={() => setImgError(true)}
+              onError={handleImageError}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />

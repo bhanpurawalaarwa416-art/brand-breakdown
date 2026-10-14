@@ -36,7 +36,30 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
 }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [currentSrc, setCurrentSrc] = useState(article.image);
   const [imgError, setImgError] = useState(false);
+  const [hasRetried, setHasRetried] = useState(false);
+
+  useEffect(() => {
+    setCurrentSrc(article.image);
+    setImgError(false);
+    setHasRetried(false);
+  }, [article.image]);
+
+  const handleImageError = () => {
+    if (!hasRetried) {
+      setHasRetried(true);
+      if (currentSrc.includes('/src/assets/images/')) {
+        setCurrentSrc(currentSrc.replace('/src/assets/images/', '/images/'));
+      } else if (currentSrc.startsWith('/images/')) {
+        setCurrentSrc(currentSrc.replace('/images/', '/src/assets/images/'));
+      } else {
+        setImgError(true);
+      }
+    } else {
+      setImgError(true);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -197,13 +220,13 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
         <div className="rounded-2xl overflow-hidden bg-gray-100 aspect-[16/9] max-h-[460px] shadow-sm border border-gray-200">
           {!imgError ? (
             <img
-              src={article.image}
+              src={currentSrc}
               alt={article.imageAlt}
               loading="lazy"
               decoding="async"
               width="960"
               height="540"
-              onError={() => setImgError(true)}
+              onError={handleImageError}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover"
             />

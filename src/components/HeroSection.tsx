@@ -92,7 +92,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               >
                 <div className="aspect-[4/3] max-h-36 overflow-hidden bg-gray-100">
                   <img
-                    src="/src/assets/images/zomato_official_cover_1791809954527.jpg"
+                    src="/images/zomato_official_cover_1791809954527.jpg"
                     alt="Official Zomato red brand artwork with noodles and food illustrations"
                     loading="lazy"
                     decoding="async"
@@ -117,7 +117,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               >
                 <div className="aspect-[4/3] max-h-36 overflow-hidden bg-gray-100">
                   <img
-                    src="/src/assets/images/nike_brand_breakdown_1791359612565.jpg"
+                    src="/images/nike_brand_breakdown_1791359612565.jpg"
                     alt="Nike runner tying shoes on urban track at sunrise showcasing Just Do It mindset"
                     loading="lazy"
                     decoding="async"
@@ -142,7 +142,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               >
                 <div className="aspect-[4/3] max-h-36 overflow-hidden bg-gray-100">
                   <img
-                    src="/src/assets/images/starbucks_lifestyle_breakdown_1791359623414.jpg"
+                    src="/images/starbucks_lifestyle_breakdown_1791359623414.jpg"
                     alt="Starbucks Third Place coffee and notebook lifestyle setup in sunlit cafe"
                     loading="lazy"
                     decoding="async"
@@ -167,7 +167,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               >
                 <div className="aspect-[4/3] max-h-36 overflow-hidden bg-gray-100">
                   <img
-                    src="/src/assets/images/apple_minimalism_breakdown_1791359633427.jpg"
+                    src="/images/apple_minimalism_breakdown_1791359633427.jpg"
                     alt="Apple minimalist hardware design resting on architectural stone block"
                     loading="lazy"
                     decoding="async"

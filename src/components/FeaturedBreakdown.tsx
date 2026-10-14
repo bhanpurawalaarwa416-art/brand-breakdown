@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Clock } from 'lucide-react';
 import { Article } from '../types';
 
@@ -11,6 +11,31 @@ export const FeaturedBreakdown: React.FC<FeaturedBreakdownProps> = ({
   article,
   onReadArticle,
 }) => {
+  const [currentSrc, setCurrentSrc] = useState(article.image);
+  const [imgError, setImgError] = useState(false);
+  const [hasRetried, setHasRetried] = useState(false);
+
+  useEffect(() => {
+    setCurrentSrc(article.image);
+    setImgError(false);
+    setHasRetried(false);
+  }, [article.image]);
+
+  const handleImageError = () => {
+    if (!hasRetried) {
+      setHasRetried(true);
+      if (currentSrc.includes('/src/assets/images/')) {
+        setCurrentSrc(currentSrc.replace('/src/assets/images/', '/images/'));
+      } else if (currentSrc.startsWith('/images/')) {
+        setCurrentSrc(currentSrc.replace('/images/', '/src/assets/images/'));
+      } else {
+        setImgError(true);
+      }
+    } else {
+      setImgError(true);
+    }
+  };
+
   return (
     <section className="py-12 bg-white border-b border-gray-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -33,16 +58,30 @@ export const FeaturedBreakdown: React.FC<FeaturedBreakdownProps> = ({
         >
           {/* Large Image Column: Optimized sizing & alt text */}
           <div className="lg:col-span-7 relative overflow-hidden bg-gray-100 aspect-[16/10] lg:aspect-auto min-h-[300px] lg:min-h-[400px]">
-            <img
-              src={article.image}
-              alt={article.imageAlt || `${article.title} featured analysis`}
-              loading="lazy"
-              decoding="async"
-              width="800"
-              height="500"
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+            {!imgError ? (
+              <img
+                src={currentSrc}
+                alt={article.imageAlt || `${article.title} featured analysis`}
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="500"
+                onError={handleImageError}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            ) : (
+              <div
+                className={`w-full h-full bg-gradient-to-br ${article.fallbackGradient} flex flex-col justify-end p-8 text-white min-h-[300px] lg:min-h-[400px]`}
+              >
+                <span className="text-xs uppercase tracking-widest font-bold opacity-80">
+                  Featured {article.category} Breakdown
+                </span>
+                <p className="font-editorial text-2xl lg:text-3xl font-bold leading-tight mt-2">
+                  {article.title}
+                </p>
+              </div>
+            )}
             {/* Subtle bottom vignette on small screens */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent lg:hidden" />
           </div>

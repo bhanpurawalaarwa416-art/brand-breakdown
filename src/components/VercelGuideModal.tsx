@@ -106,7 +106,7 @@ export const VercelGuideModal: React.FC<VercelGuideModalProps> = ({ isOpen, onCl
               <span>Deploy on Vercel (Free Hobby Plan)</span>
             </div>
             <ol className="list-decimal pl-5 space-y-1.5 text-xs text-gray-600">
-              <li>Push this project repository to your GitHub account (including <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">.npmrc</code> and <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">vercel.json</code>).</li>
+              <li>Push this project repository to your GitHub account (make sure the <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">public/</code> directory containing all brand images, along with <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">.npmrc</code> and <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">vercel.json</code> are included).</li>
               <li>Go to <strong className="text-gray-900">vercel.com</strong> and sign in with GitHub.</li>
               <li>Click <strong className="text-gray-900">&ldquo;Add New...&rdquo; &rarr; &ldquo;Project&rdquo;</strong>.</li>
               <li>Select your repository (<code className="text-gray-800">brand-breakdown</code>).</li>
