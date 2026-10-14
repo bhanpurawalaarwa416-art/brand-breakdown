@@ -11,6 +11,8 @@ import {
   KeyRound,
   HelpCircle,
   Sparkles,
+  ArrowUpRight,
+  Compass,
 } from 'lucide-react';
 import { Article } from '../types';
 import { ArticleCard } from './ArticleCard';
@@ -357,11 +359,11 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
           </div>
         </div>
 
-        {/* Section: Sources & References */}
+        {/* Section: Sources & References with verified outbound links */}
         <div className="mt-8 p-6 bg-gray-50 rounded-2xl border border-gray-200/80 space-y-3">
           <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-gray-600">
             <FileText className="w-4 h-4 text-red-600" />
-            <span>Academic Sources &amp; Business References</span>
+            <span>Academic Sources &amp; Industry Outbound References</span>
           </div>
           <div className="space-y-2">
             {article.references.map((ref, idx) => (
@@ -370,10 +372,24 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
                 className="text-xs text-gray-600 flex items-baseline gap-2 border-b border-gray-200/50 pb-2 last:border-b-0 last:pb-0"
               >
                 <span className="font-bold text-gray-400">[{idx + 1}]</span>
-                <span>
-                  <strong className="text-gray-800">{ref.title}</strong> — {ref.source}{' '}
-                  {ref.year && `(${ref.year})`}
-                </span>
+                {ref.url ? (
+                  <a
+                    href={ref.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-red-600 hover:underline inline-flex items-center gap-1 group text-gray-700"
+                    title={`Read external research on "${ref.title}" from ${ref.source}`}
+                  >
+                    <strong className="text-gray-900 group-hover:text-red-600 font-semibold">{ref.title}</strong>
+                    <span className="text-gray-500">— {ref.source} {ref.year && `(${ref.year})`}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-red-500 inline-block opacity-75 group-hover:opacity-100" />
+                  </a>
+                ) : (
+                  <span>
+                    <strong className="text-gray-800">{ref.title}</strong> — {ref.source}{' '}
+                    {ref.year && `(${ref.year})`}
+                  </span>
+                )}
               </div>
             ))}
           </div>
@@ -417,6 +433,39 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
                   isSaved={false}
                 />
               ))}
+            </div>
+
+            {/* Contextual Internal Links with Descriptive Anchor Text */}
+            <div className="pt-8 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4 text-xs font-semibold text-gray-600">
+              <a
+                href={`/category/${article.category.toLowerCase().replace(/\s+/g, '-')}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.history.pushState(null, '', `/category/${article.category.toLowerCase().replace(/\s+/g, '-')}`);
+                  window.dispatchEvent(new PopStateEvent('popstate'));
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="hover:text-red-600 hover:underline flex items-center gap-1.5"
+                title={`Explore more ${article.category} marketing breakdowns`}
+              >
+                <span>Browse More {article.category} Case Studies</span>
+                <Compass className="w-3.5 h-3.5 text-red-600" />
+              </a>
+
+              <a
+                href="/brands"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.history.pushState(null, '', '/brands');
+                  window.dispatchEvent(new PopStateEvent('popstate'));
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="hover:text-red-600 hover:underline flex items-center gap-1.5"
+                title="View all 12 company profiles in the Brand Strategy Directory"
+              >
+                <span>View All 12 Playbooks in the Brand Directory</span>
+                <Compass className="w-3.5 h-3.5 text-gray-500" />
+              </a>
             </div>
           </div>
         )}

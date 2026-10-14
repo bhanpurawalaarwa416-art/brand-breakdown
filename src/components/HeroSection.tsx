@@ -92,8 +92,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               >
                 <div className="aspect-[4/3] max-h-36 overflow-hidden bg-gray-100">
                   <img
-                    src="/src/assets/images/zomato_brand_breakdown_1791359598593.jpg"
-                    alt="Zomato food delivery lifestyle packaging and mobile application on café counter"
+                    src="/src/assets/images/zomato_official_cover_1791809954527.jpg"
+                    alt="Official Zomato red brand artwork with noodles and food illustrations"
                     loading="lazy"
                     decoding="async"
                     width="320"

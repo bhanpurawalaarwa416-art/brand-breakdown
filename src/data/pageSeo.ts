@@ -4,57 +4,57 @@ export const PAGE_SEO: Record<string, SeoMetadata> = {
   home: {
     canonicalPath: '/',
     mainKeyword: 'brand marketing strategies',
-    relatedKeywords: ['digital marketing blog', 'business case studies'],
+    relatedKeywords: ['digital marketing case studies', 'business marketing breakdowns'],
     metaTitle: 'Brand Marketing Strategies & Stories | Brand Breakdown',
-    metaDescription: 'Discover how iconic brands win customers through marketing, storytelling, and digital strategy in our student-led business publication.'
+    metaDescription: 'Discover brand marketing strategies and case studies behind iconic companies like Nike, Zomato, and Apple in our student-led digital business publication.',
   },
   brands: {
     canonicalPath: '/brands',
-    mainKeyword: 'popular brand case studies',
-    relatedKeywords: ['brand strategy directory', 'iconic company breakdowns'],
-    metaTitle: 'Popular Brand Case Studies & Directory | Brand Breakdown',
-    metaDescription: 'Explore in-depth business playbooks and brand strategy breakdowns for Nike, Zomato, Starbucks, Apple, Zara, and leading innovators.'
+    mainKeyword: 'brand strategy directory',
+    relatedKeywords: ['popular brand case studies', 'iconic company playbooks'],
+    metaTitle: 'Brand Strategy Directory & Case Studies | Brand Breakdown',
+    metaDescription: 'Explore our brand strategy directory featuring in-depth marketing playbooks for Zomato, Nike, Swiggy, Zepto, Blinkit, Coca-Cola, Adidas, Netflix, and Apple.',
   },
   about: {
     canonicalPath: '/about',
-    mainKeyword: 'BBA digital business project',
-    relatedKeywords: ['student marketing blog', 'brand breakdown mission'],
-    metaTitle: 'Why Brand Breakdown? BBA Digital Project | Brand Breakdown',
-    metaDescription: 'Learn about Brand Breakdown, a student-led publication by a BBA Digital Business student simplifying marketing strategies through real-world brand stories.'
+    mainKeyword: 'BBA digital business marketing blog',
+    relatedKeywords: ['brand breakdown student publication', 'practical marketing case studies'],
+    metaTitle: 'About Brand Breakdown: Student Marketing Publication',
+    metaDescription: 'Learn about Brand Breakdown, a BBA digital business marketing blog by student Arwa B. explaining brand strategies, consumer psychology, and market moats.',
   },
   'category-brand-stories': {
     canonicalPath: '/category/brand-stories',
     mainKeyword: 'brand storytelling case studies',
-    relatedKeywords: ['brand identity strategies', 'emotional marketing examples'],
+    relatedKeywords: ['brand identity strategy', 'emotional branding examples'],
     metaTitle: 'Brand Storytelling Case Studies | Brand Breakdown',
-    metaDescription: 'Analyze how Nike, Starbucks, Apple, and Nykaa craft emotional identities and brand storytelling to turn everyday products into cultural movements.'
+    metaDescription: 'Read brand storytelling case studies analyzing how Nike, Starbucks, Apple, Nykaa, and Adidas forge emotional identity to turn products into cultural movements.',
   },
   'category-marketing': {
     canonicalPath: '/category/marketing',
-    mainKeyword: 'digital marketing tactics',
-    relatedKeywords: ['influencer marketing strategy', 'social media relevance'],
-    metaTitle: 'Digital Marketing Tactics & Trends | Brand Breakdown',
-    metaDescription: 'Master modern marketing tactics: influencer credibility, meme marketing, social media engagement, and psychological brand recall principles.'
+    mainKeyword: 'emotional marketing campaigns',
+    relatedKeywords: ['distinctive brand assets', 'Share a Coke campaign psychology'],
+    metaTitle: 'Emotional Marketing Campaigns & Tactics | Brand Breakdown',
+    metaDescription: 'Explore emotional marketing campaigns, distinctive brand assets, and psychological triggers that turn everyday consumer brands into unforgettable market icons.',
   },
   'category-digital': {
     canonicalPath: '/category/digital',
-    mainKeyword: 'AI in digital marketing',
-    relatedKeywords: ['martech automation', 'predictive customer segmentation'],
-    metaTitle: 'AI in Digital Marketing & MarTech | Brand Breakdown',
-    metaDescription: 'Explore the transformation of digital marketing through artificial intelligence, dynamic creative optimization, and predictive martech analytics.'
+    mainKeyword: 'digital super-app marketing',
+    relatedKeywords: ['hyperlocal consumer convenience', 'algorithmic recommendation marketing'],
+    metaTitle: 'Digital Super-App Marketing & Platforms | Brand Breakdown',
+    metaDescription: 'Discover digital super-app marketing from Swiggy multi-service convenience ecosystem to Netflix machine-learning recommendation engines and streaming trends.',
   },
   'category-business': {
     canonicalPath: '/category/business',
-    mainKeyword: 'quick commerce business models',
-    relatedKeywords: ['agile retail supply chain', 'fast fashion economics'],
-    metaTitle: 'Business Models & Supply Chains | Brand Breakdown',
-    metaDescription: 'Unpack modern retail disruption from Inditex Zara fast-fashion velocity to 10-minute quick commerce dark stores like Blinkit and Zepto in India.'
+    mainKeyword: 'retail business model case studies',
+    relatedKeywords: ['quick commerce dark store economics', 'fast fashion agile supply chain'],
+    metaTitle: 'Retail Business Model Case Studies | Brand Breakdown',
+    metaDescription: 'Analyze retail business model case studies from Inditex Zara agile supply chains to Blinkit 10-minute micro-warehouse dark-store unit economics in India.',
   },
   'category-gen-z': {
     canonicalPath: '/category/gen-z',
-    mainKeyword: 'Gen Z marketing trends',
-    relatedKeywords: ['authentic creator economy', 'short-form video marketing'],
-    metaTitle: 'Gen Z Marketing Trends & Consumer Habits | Brand Breakdown',
-    metaDescription: 'Discover why Gen Z is transforming modern marketing through ad skepticism, lo-fi short-form video, ethical transparency, and participatory culture.'
-  }
+    mainKeyword: 'Gen Z consumer marketing',
+    relatedKeywords: ['10 minute grocery delivery marketing', 'youth culture brand strategy'],
+    metaTitle: 'Gen Z Consumer Marketing & Playbooks | Brand Breakdown',
+    metaDescription: 'Explore Gen Z consumer marketing strategies: how Zepto sub-90-second dark stores, purple aesthetic, and meme banter captured young urban Indian shoppers.',
+  },
 };

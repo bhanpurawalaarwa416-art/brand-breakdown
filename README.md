@@ -41,6 +41,7 @@ Deploying Brand Breakdown to Vercel requires zero complex configuration and runs
 
 1. **Push to GitHub**:
    - Push this codebase to a repository on your GitHub account (e.g., `brand-breakdown`).
+   - The project includes `.npmrc` (`legacy-peer-deps=true`) and `vercel.json` (SPA client routing rewrites) so that `npm install` runs smoothly without peer dependency resolution errors.
 2. **Open Vercel**:
    - Go to [vercel.com](https://vercel.com) and log in using your GitHub account.
 3. **Import Project**:

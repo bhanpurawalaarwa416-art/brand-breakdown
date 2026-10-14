@@ -106,11 +106,12 @@ export const VercelGuideModal: React.FC<VercelGuideModalProps> = ({ isOpen, onCl
               <span>Deploy on Vercel (Free Hobby Plan)</span>
             </div>
             <ol className="list-decimal pl-5 space-y-1.5 text-xs text-gray-600">
-              <li>Push this project repository to your GitHub account.</li>
+              <li>Push this project repository to your GitHub account (including <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">.npmrc</code> and <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">vercel.json</code>).</li>
               <li>Go to <strong className="text-gray-900">vercel.com</strong> and sign in with GitHub.</li>
               <li>Click <strong className="text-gray-900">&ldquo;Add New...&rdquo; &rarr; &ldquo;Project&rdquo;</strong>.</li>
               <li>Select your repository (<code className="text-gray-800">brand-breakdown</code>).</li>
-              <li>Vercel automatically detects <strong className="text-gray-900">Vite</strong> as the framework!</li>
+              <li>Vercel automatically detects <strong className="text-gray-900">Vite</strong> as the framework preset!</li>
+              <li>The pre-configured <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">.npmrc</code> handles peer dependencies, and <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">vercel.json</code> ensures SPA routes rewrite seamlessly to <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">/index.html</code>.</li>
               <li>Click <strong className="text-red-600 font-bold">Deploy</strong>. Your site will be live on a <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-800">.vercel.app</code> domain in ~45 seconds.</li>
             </ol>
           </div>

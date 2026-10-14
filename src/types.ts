@@ -25,6 +25,7 @@ export interface ArticleReference {
   title: string;
   source: string;
   year?: string;
+  url?: string;
 }
 
 export interface Article {

@@ -69,7 +69,7 @@ export const BRANDS: BrandInfo[] = [
     description: 'Elevated personal electronics into status symbols and intuitive tools by practicing radical minimalism in product design, packaging, retail temples, and ad messaging.',
     keyStrategy: 'Radical Design Reduction & Closed-Ecosystem Value',
     primaryColor: '#555555',
-    associatedArticleSlugs: ['apple-simplicity-superpower', 'unforgettable-brand-strategy'],
+    associatedArticleSlugs: ['apple-simplicity-superpower'],
     foundedYear: '1976',
     origin: 'Cupertino, California, USA'
   },
@@ -81,7 +81,7 @@ export const BRANDS: BrandInfo[] = [
     description: 'Pioneered India’s lightning-fast dark store network under the Zomato umbrella, shifting consumer grocery habits from monthly supermarket visits to on-demand instant gratification.',
     keyStrategy: 'Hyperlocal Micro-Warehousing & High Stock Turn',
     primaryColor: '#F4C430',
-    associatedArticleSlugs: ['quick-commerce-india'],
+    associatedArticleSlugs: ['blinkit-quick-commerce-powerhouse'],
     foundedYear: '2013',
     origin: 'Gurugram, India'
   },
@@ -93,7 +93,7 @@ export const BRANDS: BrandInfo[] = [
     description: 'Founded by teenage entrepreneurs, Zepto challenged established retail giants with sub-10-minute grocery runs, optimized dark store picking routines, and Zepto Café snacks.',
     keyStrategy: 'Speed As Moat & Algorithmic Store Routing',
     primaryColor: '#9C27B0',
-    associatedArticleSlugs: ['quick-commerce-india', 'gen-z-marketing-shift'],
+    associatedArticleSlugs: ['zepto-10-minute-delivery'],
     foundedYear: '2021',
     origin: 'Mumbai, India'
   },
@@ -105,7 +105,7 @@ export const BRANDS: BrandInfo[] = [
     description: 'Built a multi-category convenience empire encompassing food delivery, Swiggy Instamart quick commerce, Genie pick-up service, and Dineout restaurant reservations.',
     keyStrategy: 'Super-App Utility & Moment Marketing',
     primaryColor: '#FC8019',
-    associatedArticleSlugs: ['quick-commerce-india', 'brands-social-media-relevance'],
+    associatedArticleSlugs: ['swiggy-hyper-convenience-super-app'],
     foundedYear: '2014',
     origin: 'Bengaluru, India'
   },
@@ -117,7 +117,7 @@ export const BRANDS: BrandInfo[] = [
     description: 'Mastered global emotional marketing for over a century, associating caramel soda with happiness, family reunions, festive warmth, and universal celebrations.',
     keyStrategy: 'Happiness Positioning & Ubiquitous Distribution',
     primaryColor: '#F40009',
-    associatedArticleSlugs: ['unforgettable-brand-strategy'],
+    associatedArticleSlugs: ['coca-cola-happiness-marketing'],
     foundedYear: '1892',
     origin: 'Atlanta, Georgia, USA'
   },
@@ -129,7 +129,7 @@ export const BRANDS: BrandInfo[] = [
     description: 'Merged grassroots athletic performance with global street culture, music partnerships (Run-DMC, Pharrell), and iconic heritage revivals like Samba, Gazelle, and Stan Smith.',
     keyStrategy: 'Subculture Alignment & Archive Resurgence',
     primaryColor: '#000000',
-    associatedArticleSlugs: ['gen-z-marketing-shift', 'unforgettable-brand-strategy'],
+    associatedArticleSlugs: ['adidas-streetwear-sport-culture'],
     foundedYear: '1949',
     origin: 'Herzogenaurach, Germany'
   },
@@ -141,7 +141,7 @@ export const BRANDS: BrandInfo[] = [
     description: 'Disrupted linear television and DVD rentals through hyper-personalized algorithmic recommendations, simultaneous global releases, and irreverent social media commentary.',
     keyStrategy: 'Algorithmic Personalization & Meme-First Community',
     primaryColor: '#E50914',
-    associatedArticleSlugs: ['brands-social-media-relevance', 'ai-in-digital-marketing'],
+    associatedArticleSlugs: ['netflix-streaming-brand-experience'],
     foundedYear: '1997',
     origin: 'Los Gatos, California, USA'
   }

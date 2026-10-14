@@ -1,0 +1,8 @@
+# robots.txt for Brand Breakdown
+# https://brandbreakdown.dev
+
+User-agent: *
+Allow: /
+
+# Canonical XML Sitemap
+Sitemap: https://brandbreakdown.dev/sitemap.xml

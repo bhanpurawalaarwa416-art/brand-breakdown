@@ -70,7 +70,17 @@ export default function App() {
         if (found) {
           setActiveArticleSlug(slug);
           setCurrentTab('article');
-          updatePageSeo(found.seo);
+          updatePageSeo(found.seo, {
+            type: 'Article',
+            article: {
+              title: found.title,
+              description: found.summary,
+              image: found.image,
+              publishedDate: found.publishedDate,
+              author: found.author,
+              brandName: found.brandName,
+            },
+          });
           return;
         }
       }
@@ -83,7 +93,17 @@ export default function App() {
         if (found) {
           setActiveArticleSlug(slug);
           setCurrentTab('article');
-          updatePageSeo(found.seo);
+          updatePageSeo(found.seo, {
+            type: 'Article',
+            article: {
+              title: found.title,
+              description: found.summary,
+              image: found.image,
+              publishedDate: found.publishedDate,
+              author: found.author,
+              brandName: found.brandName,
+            },
+          });
           return;
         }
       }
@@ -93,7 +113,7 @@ export default function App() {
     if (path === '/brands' || hash === '#brands') {
       setCurrentTab('brands');
       setActiveArticleSlug(null);
-      updatePageSeo(PAGE_SEO.brands);
+      updatePageSeo(PAGE_SEO.brands, { type: 'CollectionPage' });
       return;
     }
 
@@ -101,7 +121,7 @@ export default function App() {
     if (path === '/about' || hash === '#about') {
       setCurrentTab('about');
       setActiveArticleSlug(null);
-      updatePageSeo(PAGE_SEO.about);
+      updatePageSeo(PAGE_SEO.about, { type: 'WebSite' });
       return;
     }
 
@@ -124,7 +144,7 @@ export default function App() {
 
         const seoKey = `category-${catSlug}`;
         if (PAGE_SEO[seoKey]) {
-          updatePageSeo(PAGE_SEO[seoKey]);
+          updatePageSeo(PAGE_SEO[seoKey], { type: 'CollectionPage' });
         }
         return;
       }
@@ -134,7 +154,7 @@ export default function App() {
     setActiveArticleSlug(null);
     setCurrentTab('home');
     setSelectedCategory('All');
-    updatePageSeo(PAGE_SEO.home);
+    updatePageSeo(PAGE_SEO.home, { type: 'WebSite' });
   };
 
   useEffect(() => {
