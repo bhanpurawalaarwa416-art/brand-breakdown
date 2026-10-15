@@ -33,13 +33,13 @@ export const BrandDirectory: React.FC<BrandDirectoryProps> = ({
         <div className="text-xs font-extrabold uppercase tracking-widest text-red-600 flex items-center gap-2">
           <span>Brand Directory</span>
           <span aria-hidden="true">·</span>
-          <span>12 Iconic Case Studies</span>
+          <span>12 Strategic Playbooks</span>
         </div>
         <h1 className="font-editorial text-4xl sm:text-5xl font-black text-gray-950 tracking-tight">
-          Explore Popular Brands &amp; Their Strategic Playbooks
+          Brand Directory: Case Studies &amp; Company Analysis
         </h1>
         <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
-          From quick-commerce disruptors in India to global lifestyle empires, discover the strategic DNA and marketing blueprints behind the world&apos;s most influential brands.
+          Explore our brand directory featuring comprehensive company brand analysis and in-depth brand case studies behind the world&apos;s most innovative market leaders.
         </p>
       </div>
 

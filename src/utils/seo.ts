@@ -26,14 +26,12 @@ export function updatePageSeo(seo: SeoMetadata, context?: SeoContext) {
   }
   metaDesc.setAttribute('content', seo.metaDescription);
 
-  // Update or create Meta Keywords
-  let metaKeywords = document.querySelector('meta[name="keywords"]');
-  if (!metaKeywords) {
-    metaKeywords = document.createElement('meta');
-    metaKeywords.setAttribute('name', 'keywords');
-    document.head.appendChild(metaKeywords);
+  // Modern SEO best practice: Google does not use meta keywords for ranking.
+  // Remove any legacy meta keywords tags to comply with guidelines.
+  const existingKeywords = document.querySelector('meta[name="keywords"]');
+  if (existingKeywords && existingKeywords.parentNode) {
+    existingKeywords.parentNode.removeChild(existingKeywords);
   }
-  metaKeywords.setAttribute('content', [seo.mainKeyword, ...seo.relatedKeywords].join(', '));
 
   // Update or create Canonical Link
   let canonicalLink = document.querySelector('link[rel="canonical"]');
@@ -45,12 +43,22 @@ export function updatePageSeo(seo: SeoMetadata, context?: SeoContext) {
   const canonicalUrl = `${window.location.origin}${seo.canonicalPath}`;
   canonicalLink.setAttribute('href', canonicalUrl);
 
-  // Update OpenGraph tags
-  const ogTitle = document.querySelector('meta[property="og:title"]');
-  if (ogTitle) ogTitle.setAttribute('content', seo.metaTitle);
+  // Update or create OpenGraph tags
+  let ogTitle = document.querySelector('meta[property="og:title"]');
+  if (!ogTitle) {
+    ogTitle = document.createElement('meta');
+    ogTitle.setAttribute('property', 'og:title');
+    document.head.appendChild(ogTitle);
+  }
+  ogTitle.setAttribute('content', seo.metaTitle);
 
-  const ogDesc = document.querySelector('meta[property="og:description"]');
-  if (ogDesc) ogDesc.setAttribute('content', seo.metaDescription);
+  let ogDesc = document.querySelector('meta[property="og:description"]');
+  if (!ogDesc) {
+    ogDesc = document.createElement('meta');
+    ogDesc.setAttribute('property', 'og:description');
+    document.head.appendChild(ogDesc);
+  }
+  ogDesc.setAttribute('content', seo.metaDescription);
 
   let ogUrl = document.querySelector('meta[property="og:url"]');
   if (!ogUrl) {
@@ -59,6 +67,22 @@ export function updatePageSeo(seo: SeoMetadata, context?: SeoContext) {
     document.head.appendChild(ogUrl);
   }
   ogUrl.setAttribute('content', canonicalUrl);
+
+  let ogType = document.querySelector('meta[property="og:type"]');
+  if (!ogType) {
+    ogType = document.createElement('meta');
+    ogType.setAttribute('property', 'og:type');
+    document.head.appendChild(ogType);
+  }
+  ogType.setAttribute('content', context?.type === 'Article' ? 'article' : 'website');
+
+  let ogSiteName = document.querySelector('meta[property="og:site_name"]');
+  if (!ogSiteName) {
+    ogSiteName = document.createElement('meta');
+    ogSiteName.setAttribute('property', 'og:site_name');
+    document.head.appendChild(ogSiteName);
+  }
+  ogSiteName.setAttribute('content', 'Brand Breakdown');
 
   // Update or create OpenGraph & Twitter Images
   const imageUrl = context?.image || context?.article?.image;
@@ -82,12 +106,30 @@ export function updatePageSeo(seo: SeoMetadata, context?: SeoContext) {
     twitterImg.setAttribute('content', fullImageUrl);
   }
 
-  // Update Twitter tags
-  const twitterTitle = document.querySelector('meta[name="twitter:title"]');
-  if (twitterTitle) twitterTitle.setAttribute('content', seo.metaTitle);
+  // Update or create Twitter tags
+  let twitterCard = document.querySelector('meta[name="twitter:card"]');
+  if (!twitterCard) {
+    twitterCard = document.createElement('meta');
+    twitterCard.setAttribute('name', 'twitter:card');
+    document.head.appendChild(twitterCard);
+  }
+  twitterCard.setAttribute('content', 'summary_large_image');
 
-  const twitterDesc = document.querySelector('meta[name="twitter:description"]');
-  if (twitterDesc) twitterDesc.setAttribute('content', seo.metaDescription);
+  let twitterTitle = document.querySelector('meta[name="twitter:title"]');
+  if (!twitterTitle) {
+    twitterTitle = document.createElement('meta');
+    twitterTitle.setAttribute('name', 'twitter:title');
+    document.head.appendChild(twitterTitle);
+  }
+  twitterTitle.setAttribute('content', seo.metaTitle);
+
+  let twitterDesc = document.querySelector('meta[name="twitter:description"]');
+  if (!twitterDesc) {
+    twitterDesc = document.createElement('meta');
+    twitterDesc.setAttribute('name', 'twitter:description');
+    document.head.appendChild(twitterDesc);
+  }
+  twitterDesc.setAttribute('content', seo.metaDescription);
 
   // Dynamic Schema.org JSON-LD Structured Data
   let schemaScript = document.getElementById('dynamic-page-schema') as HTMLScriptElement | null;
@@ -136,6 +178,7 @@ export function updatePageSeo(seo: SeoMetadata, context?: SeoContext) {
       publisher: {
         '@type': 'Organization',
         name: 'Brand Breakdown',
+        url: window.location.origin,
       },
     };
   } else {
@@ -150,6 +193,11 @@ export function updatePageSeo(seo: SeoMetadata, context?: SeoContext) {
         '@type': 'SearchAction',
         target: `${window.location.origin}/?search={search_term_string}`,
         'query-input': 'required name=search_term_string',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Brand Breakdown',
+        url: window.location.origin,
       },
     };
   }

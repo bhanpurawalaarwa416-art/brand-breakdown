@@ -29,11 +29,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             <h1 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-black text-gray-950 tracking-tight leading-[1.08] text-balance">
-              The Stories, Strategies &amp; Secrets Behind Your Favourite Brands.
+              Brand Case Studies &amp; Marketing Strategies Behind Iconic Companies
             </h1>
 
             <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl font-normal">
-              Discover how the world&apos;s most recognisable brands use marketing, storytelling, technology and strategy to win customers.
+              Explore in-depth marketing case studies, consumer psychology breakdowns, and proven brand marketing strategies used by the world&apos;s most recognisable companies.
             </p>
 
             {/* CTAs with clear anchor text */}

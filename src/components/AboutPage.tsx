@@ -27,13 +27,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         <div className="text-xs font-extrabold uppercase tracking-widest text-red-600 flex items-center gap-2">
           <span>Editorial Manifest</span>
           <span aria-hidden="true">·</span>
-          <span>BBA Digital Business</span>
+          <span>BBA Digital Business Publication</span>
         </div>
         <h1 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-black text-gray-950 tracking-tight text-balance">
-          Why Brand Breakdown?
+          About Brand Breakdown
         </h1>
         <p className="text-xl text-gray-700 leading-relaxed font-normal pt-2">
-          Brand Breakdown is a student-led digital publication created to explore the strategies behind the brands we interact with every day. From advertising and influencer marketing to customer experience and business models, we break complex ideas into simple and relatable stories.
+          Brand Breakdown is an academic digital publication delivering actionable brand marketing insights, real-world business case studies, and consumer psychology teardowns behind iconic brands we interact with every day.
         </p>
       </div>
 
